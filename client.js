@@ -1,3 +1,4 @@
+/** Todo MVC */
 var todoList = {
   todos: [],
   addTodo: function(todoText) {
@@ -19,19 +20,19 @@ var todoList = {
   toggleAll: function() {
     var totalTodos = this.todos.length;
     var completedTodos = 0;
-    
+
     // Get number of completed todos
-    this.todos.forEach(function(todo){
-      if(todo.completed === true) {
+    this.todos.forEach(function(todo) {
+      if (todo.completed === true) {
         completedTodos++;
       }
     });
 
     this.todos.forEach(function(todo) {
       // Case 1 : If everything's true, make everything false
-      if(completedTodos === totalTodos) {
+      if (completedTodos === totalTodos) {
         todo.completed = false;
-      // Case 2: Otherwise, make everything true
+        // Case 2: Otherwise, make everything true
       } else {
         todo.completed = true;
       }
@@ -43,15 +44,20 @@ var handlers = {
   addTodo: function() {
     var addTodoTextInput = document.getElementById('addTodoTextInput');
     todoList.addTodo(addTodoTextInput.value);
-    addTodoTextInput.value = "";
+    addTodoTextInput.value = '';
     view.displayTodos();
   },
   changeTodo: function() {
     var changeTodoTextInput = document.getElementById('changeTodoTextInput');
-    var changeTodoPositionInput = document.getElementById('changeTodoPositionInput');
-    todoList.changeTodo(changeTodoPositionInput.valueAsNumber, changeTodoTextInput.value);
-    changeTodoPositionInput.value = "";
-    changeTodoTextInput.value = "";
+    var changeTodoPositionInput = document.getElementById(
+      'changeTodoPositionInput'
+    );
+    todoList.changeTodo(
+      changeTodoPositionInput.valueAsNumber,
+      changeTodoTextInput.value
+    );
+    changeTodoPositionInput.value = '';
+    changeTodoTextInput.value = '';
     view.displayTodos();
   },
   deleteTodo: function(position) {
@@ -59,9 +65,11 @@ var handlers = {
     view.displayTodos();
   },
   toggleCompleted: function() {
-    var toggleCompletedPositionInput = document.getElementById('toggleCompletedPositionInput');
+    var toggleCompletedPositionInput = document.getElementById(
+      'toggleCompletedPositionInput'
+    );
     todoList.toggleCompleted(toggleCompletedPositionInput.valueAsNumber);
-    toggleCompletedPositionInput.value = "";
+    toggleCompletedPositionInput.value = '';
     view.displayTodos();
   },
   toggleAll: function() {
@@ -74,16 +82,16 @@ var view = {
   displayTodos: function() {
     var todosUl = document.querySelector('ul');
     todosUl.innerHTML = ''; // Clears todosUl of all html elements (li elements);
-    todoList.todos.forEach(function(todo, position){
+    todoList.todos.forEach(function(todo, position) {
       var todoLi = document.createElement('li');
       var todoTextWithCompletion = '';
-      
+
       if (todo.completed === true) {
         todoTextWithCompletion = '(x) ' + todo.todoText;
       } else {
         todoTextWithCompletion = '( ) ' + todo.todoText;
       }
-      
+
       todoLi.id = position;
       todoLi.textContent = todoTextWithCompletion;
       todoLi.appendChild(this.createDeleteButton());
@@ -102,7 +110,7 @@ var view = {
       var elementClicked = event.target;
 
       // check if delete button is clicked
-      if(elementClicked.className === 'deleteButton') {
+      if (elementClicked.className === 'deleteButton') {
         handlers.deleteTodo(parseInt(elementClicked.parentNode.id));
       }
     });
@@ -110,11 +118,3 @@ var view = {
 };
 
 view.setUpEventListeners();
-
-
-
-
-
-
-
-
